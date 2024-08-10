@@ -81,6 +81,22 @@ function ServerCmdLookout(%this) {
 }
 
 package MM_Lookout {
+	function AIPlayer::MM_Investigate(%this, %client)
+	{
+		parent::MM_Investigate(%this, %client);
+
+		talk(%this.originalClient);
+		talk(%client.buggedClient);
+		talk(%this.disfigured);
+		if(
+			%client.MM_canLookout() && 
+			%this.originalClient == %client.buggedClient && 
+			!%this.disfigured
+		) {
+			messageClient(%client, '', "\c2This corpse has your camera. Pick it up to retrieve it.");
+		}
+	}
+
 	function GameConnection::MM_Chat(%this, %obj, %type, %msg, %excludeList, %pre2, %condition, %a0, %a1, %a2, %a3, %a4) {
 		%mini = getMiniGameFromObject(%this);
 		for(%i=0;%i<%mini.numMembers;%i++) {
