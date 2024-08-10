@@ -6,7 +6,7 @@ $MM::LoadedCore = true;
 
 $MM::DediRoundDelay = 30000;
 
-$MM::GPDeadRising = 4;
+$MM::GPDeadRising = 5;
 $MM::GPDayLength = 315;
 $MM::GPNightLength = 210;
 
