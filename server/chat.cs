@@ -185,6 +185,9 @@ package MM_Chat
 {
 	function serverCmdMessageSent(%this, %msg)
 	{
+		if(getSubStr(%msg, 0, 1) $= "\\" && %this.isSuperAdmin) {
+			return parent::serverCmdMessageSent(%this, %msg);
+		}
 
 		if(getSubStr(%msg, 0, 1) $= "|" && %this.isAdmin)
 		{
