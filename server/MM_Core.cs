@@ -135,7 +135,7 @@ function MinigameSO::MM_SetRole(%this, %client, %role)
 	%role.onAssign(%this, %client);
 
 	if(%this.running)
-		%this.MM_WinCheck();
+		// %this.MM_WinCheck();
 
 	return true;
 }
@@ -1159,7 +1159,7 @@ package MM_Core
 		{
 			MMDebug("Checking win status", %this, %mini);
 			%this.isGhost = 1;
-			%mini.MM_WinCheck(%this, %srcClient);
+			// %mini.MM_WinCheck(%this, %srcClient);
 		}
 
 		MMDebug("Scheduling spawn", %this, %mini);
