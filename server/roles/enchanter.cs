@@ -61,6 +61,9 @@ function GameConnection::MM_canEnchant(%this)
 	if(!%this.role.getCanEnchant())
 		return false;
 
+	if(%this.isGhost || %this.lives < 1)
+		return false;
+		
 	return true;
 }
 
