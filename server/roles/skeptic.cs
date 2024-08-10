@@ -68,7 +68,7 @@ package MM_Skeptic
 
 		%pre = "\c7[<color:400040>Cult\c7]";
 
-		%name = %this.garboName;
+		%name = %this.lastObfuscation;
 
 		%format = '%1\c5%2\c6: %3';
 

@@ -61,6 +61,7 @@ function GameConnection::MM_canSleuth(%this)
 	return true;
 }
 
+// TO-DO: Pull this out of this package? It will need to be used elsewhere soon.
 function GameConnection::getObfuscatedName(%this, %table, %maxLenMod, %minLen)
 {
 	%mini = getMiniGameFromObject(%this);
@@ -118,7 +119,7 @@ package MM_Spy
 
 		%pre = "\c7[\c6Godfather\c7]";
 
-		%name = %this.garboName;
+		%name = %this.lastObfuscation;
 
 		%format = '%1\c5%2\c6: %3';
 
@@ -136,8 +137,9 @@ package MM_Spy
 	function MinigameSO::MM_SetRole(%this, %client, %role)
 	{
 		Parent::MM_SetRole(%this, %client, %role);
+		
 		if(%client.role.getAlignment() == 1 || %client.role.getAlignment() == 4)
-			%client.garboName = getNonsense();
+			%client.getObfuscatedName(1, 5, 10);
 	}
 };
 activatePackage(MM_Spy);
