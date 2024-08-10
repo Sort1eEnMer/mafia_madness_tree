@@ -30,11 +30,16 @@ if(!isObject(MMRole_Lookout)){
 
 		helpText = 	"\c4You are also the \c6Lookout\c4! You are responsible for keeping an eye on suspicious individuals." NL
 					"\c6Right Click\c4 on someone to plant a camera on them.  Then type \c6/lookout\c4 to watch them!" NL
-					"\c4You can only have one \c6camera\c4 active at a time!  In order to retrieve the camera, you must right click on the person you gave it to.";
+					"\c4You can only have one \c6camera\c4 active at a time!  In order to retrieve the camera, you must right click on the person you gave it to." NL
+					"\c4In order to retrieve your \c6camera\c4 if the person it is planted on dies, you must find their body and pick it up." NL 
+					"If the \c0Crazy\c4 disfigures the body, your camera will be lost forever.";
 
 		description = 	"\c4Tthe \c6Lookout\c4 is responsible for keeping an eye on suspicious individuals." NL
 					"\c6Right Click\c4 on someone to plant a camera on them.  Then type \c6/lookout\c4 to watch them!" NL
-					"\c4You can only have one \c6camera\c4 active at a time!  In order to retrieve the camera, you must right click on the person you gave it to.";};}
+					"\c4You can only have one \c6camera\c4 active at a time!  In order to retrieve the camera, you must right click on the person you gave it to." NL
+					"\c4In order to retrieve your \c6camera\c4 if the person it is planted on dies, you must find their body and pick it up." NL 
+					"\c4If the \c0Crazy\c4 disfigures the body, your camera will be lost forever!";
+					};}
 
 //SUPPORT
 function MMRole::getCanLookout(%this){
