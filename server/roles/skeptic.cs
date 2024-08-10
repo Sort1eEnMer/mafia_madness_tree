@@ -76,7 +76,7 @@ package MM_Skeptic
 		for(%i = 0; %i < %mini.numMembers; %i++)
 		{
 			%mem = %mini.member[%i];
-			if(%mem.MM_canCultSleuth() && %client.MM_isCultist()) //if this doesnt work, replace %client.MM_isCultist() with %this.role.getAlignment() == 4
+			if(%mem.MM_canCultSleuth())
 				commandToClient(%mem, 'chatMessage', %this, '', '', %format, %pre, %name, %msg);
 		}
 
