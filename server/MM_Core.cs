@@ -377,8 +377,11 @@ function MinigameSO::MM_Stop(%this)
 	%this.reset(0);
 
 	MMDebug("Clearing bottomprints", %this);
-	for(%i = 0; %i < %this.numMembers; %i++)
+	for(%i = 0; %i < %this.numMembers; %i++) {
 		bottomPrint(%this.member[%i], "", 0);
+		if(%this.member[%i].randomizeGunSelection)
+			serverCmdSetGun(%this.member[%i], getRandom($MM::GunItems - 1));
+	}
 
 	if(%this.MMDedi)
 	{

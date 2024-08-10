@@ -211,6 +211,17 @@ function serverCmdListGuns(%this)
 	messageClient(%this, '', "\c4Use \c3/setGun \c6[ID or name] \c4to have that gun next round.");
 }
 
+function serverCmdRandomGun(%this) {
+	%this.randomizeGunSelection = %this.randomizeGunSelection ? 0 : 1;
+	if(%this.randomizeGunSelection) {
+		messageClient(%this, '', "\c4Your gun will now be randomized each round. Type \c3/randomGun \c4again to disable this.");
+		// Get a new one immediately
+		serverCmdSetGun(%this, getRandom($MM::GunItems - 1));
+	}
+	else {
+		return messageClient(%this, '', "\c4You have disabled gun randomization.");
+	}
+}
 function serverCmdSetGun(%this, %gun1, %gun2, %gun3)
 {
 	%gun = %gun1;
@@ -243,7 +254,7 @@ function serverCmdSetGun(%this, %gun1, %gun2, %gun3)
 		}
 	}
 
-	if(%gun $= "") %gun = 0;
+	if(%gun $= "") %gun = -1;
 
 	%item = nameToID($MM::GunItem[%gun]);
 	if(!isObject(%item))
