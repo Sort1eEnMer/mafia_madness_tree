@@ -30,11 +30,16 @@ if(!isObject(MMRole_Lookout)){
 
 		helpText = 	"\c4You are also the \c6Lookout\c4! You are responsible for keeping an eye on suspicious individuals." NL
 					"\c6Right Click\c4 on someone to plant a camera on them.  Then type \c6/lookout\c4 to watch them!" NL
-					"\c4You can only have one \c6camera\c4 active at a time!  In order to retrieve the camera, you must right click on the person you gave it to.";
+					"\c4You can only have one \c6camera\c4 active at a time!  In order to retrieve the camera, you must right click on the person you gave it to." NL
+					"\c4In order to retrieve your \c6camera\c4 if the person it is planted on dies, you must find their body and pick it up." NL 
+					"If the \c0Crazy\c4 disfigures the body, your camera will be lost forever.";
 
 		description = 	"\c4Tthe \c6Lookout\c4 is responsible for keeping an eye on suspicious individuals." NL
 					"\c6Right Click\c4 on someone to plant a camera on them.  Then type \c6/lookout\c4 to watch them!" NL
-					"\c4You can only have one \c6camera\c4 active at a time!  In order to retrieve the camera, you must right click on the person you gave it to.";};}
+					"\c4You can only have one \c6camera\c4 active at a time!  In order to retrieve the camera, you must right click on the person you gave it to." NL
+					"\c4In order to retrieve your \c6camera\c4 if the person it is planted on dies, you must find their body and pick it up." NL 
+					"\c4If the \c0Crazy\c4 disfigures the body, your camera will be lost forever!";
+					};}
 
 //SUPPORT
 function MMRole::getCanLookout(%this){
@@ -81,6 +86,33 @@ function ServerCmdLookout(%this) {
 }
 
 package MM_Lookout {
+	function AIPlayer::MM_Investigate(%this, %client)
+	{
+		parent::MM_Investigate(%this, %client);
+
+		if(
+			%client.MM_canLookout() && 
+			%this.originalClient == %client.buggedClient && 
+			!%this.disfigured
+		) {
+			messageClient(%client, '', "\c2This corpse has your camera. Pick it up to retrieve it.");
+		}
+	}
+
+	function AIPlayer::MM_onCorpsePickUp(%this, %obj) {
+		parent::MM_onCorpsePickUp(%this, %obj);
+
+		%client = %obj.getControllingClient();
+		if(
+			%client.MM_canLookout() && 
+			%this.originalClient == %client.buggedClient && 
+			!%this.disfigured
+		) {
+			%client.buggedClient = -1;
+			messageClient(%client, '', "\c4You have removed your camera bug from\c3" SPC %this.originalClient.getSimpleName() @ "'s \c4corpse!");
+		}
+	}
+
 	function GameConnection::MM_Chat(%this, %obj, %type, %msg, %excludeList, %pre2, %condition, %a0, %a1, %a2, %a3, %a4) {
 		%mini = getMiniGameFromObject(%this);
 		for(%i=0;%i<%mini.numMembers;%i++) {
