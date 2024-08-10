@@ -103,6 +103,7 @@ function serverCmdIsolateChat(%this, %v0, %v1, %v2, %v3, %v4, %v5)
 		$MM::IsolateChatMems = trim($MM::IsolateChatMems SPC %obj);
 
 		messageAll('', "<font:impact:24>\c3" @ %name SPC "\c0added \c3" @ %oName SPC "\c0to isolated chat.");
+		%obj.centerPrint("<font:impact:36>\c4You have been added by an admin to isolated chat.<br>\c5Read the chat \c4and respond to avoid being \c5banned!", 8);
 		echo(%name SPC "added " @ %oName SPC "to isolated chat.");
 	}
 	else
