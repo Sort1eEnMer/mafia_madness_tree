@@ -1,0 +1,85 @@
+MMGAMEMODE Untie The Hindus
+
+///\c3Mafia Madness (too) \c4: Untie The Hindus
+///\c4By \c3Caden100
+///\c4A gamemode where the innocents have to defeat the socks...or join them
+
+MafRatio 0
+MinMaf 0
+
+//Disable dead rising; reviver cultists are enough.
+//PREF DeadRising 4
+
+//Temporary variables
+%copRatio 0.2
+%cultistRatio 0.17
+%miscRatio 0.125
+%alarmistChance 0.5
+
+ForceMafOrder JOHNCENA A V G CH C FG D LAW
+ForceInnoOrder F O IF DC LK AM BG S K RC CL CM ZC
+
+[SortGroup0_]
+RolePot K
+Ratio 1
+RatioVar innos
+ForceMinmembers 1
+ForceMaxMembers 1
+
+
+//Always make a fingerprint expert appear with more than three players.
+[SortGroup1_]
+Condition %ctRC > 0
+RolePot F F F F
+Ratio 1
+RatioVar members
+
+
+//Always make regular cop appear before any other cop variants
+[SortGroup2_]
+RolePot O
+Ratio %%copRatio
+RatioVar members
+
+//Protective innos, only appear after normal cop has appeared once
+[SortGroup3_]
+Condition %ctO > 0
+RolePot BB BB DC IF LK BG
+AllowMultipleDraw 1
+Ratio %%copRatio
+RatioVar members
+RatioModCount -1
+ForceMaxMembers 3
+
+//Special Cultists
+[SortGroup8_]
+RolePot CL RC CL CL
+Ratio %%cultistRatio
+AllowMultipleDraw 1
+RatioVar innos
+RatioAddRandom 1
+RatioRandomMin 0
+RatioRandomMax 1
+ForceMinMembers 1
+
+//Extra Fingerprinters for RC
+[SortGroup10_]
+Condition %ctRC > 0
+RolePot F
+AllowMultipleDraw 1
+Ratio %%copRatio
+RatioVar members
+RatioModCount -1
+ForceMaxMembers 2
+
+//Inno Anti-Cult
+[SortGroup11_]
+Condition ? ~ < %alarmistChance, or %ctCL > 1
+RolePot AL AL K
+RoleCondition_AL %ctCL > 0
+Ratio 1
+RatioVar innos
+
+
+[]
+SortGroupCt 13
