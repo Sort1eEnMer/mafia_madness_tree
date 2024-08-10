@@ -85,15 +85,26 @@ package MM_Lookout {
 	{
 		parent::MM_Investigate(%this, %client);
 
-		talk(%this.originalClient);
-		talk(%client.buggedClient);
-		talk(%this.disfigured);
 		if(
 			%client.MM_canLookout() && 
 			%this.originalClient == %client.buggedClient && 
 			!%this.disfigured
 		) {
 			messageClient(%client, '', "\c2This corpse has your camera. Pick it up to retrieve it.");
+		}
+	}
+
+	function AIPlayer::MM_onCorpsePickUp(%this, %obj) {
+		parent::MM_onCorpsePickUp(%this, %obj);
+
+		%client = %obj.getControllingClient();
+		if(
+			%client.MM_canLookout() && 
+			%this.originalClient == %client.buggedClient && 
+			!%this.disfigured
+		) {
+			%client.buggedClient = -1;
+			messageClient(%client, '', "\c4You have removed your camera bug from\c3" SPC %this.originalClient.getSimpleName() @ "'s \c4corpse!");
 		}
 	}
 
