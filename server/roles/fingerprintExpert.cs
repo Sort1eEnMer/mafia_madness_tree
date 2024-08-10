@@ -75,9 +75,13 @@ function AIPlayer::MM_InvestigateFingerprints(%this, %client)
 	%rmin2 = ((%rtod + 30) - %rsec2) / 60;
 	messageClient(%client, '', "\c2Died between\c3" SPC %rmin SPC "\c2min\c3" SPC %rsec SPC "\c2sec and\c3" SPC %rmin2 SPC "\c2min\c3" SPC %rsec2 SPC "\c2secs ago.");
 
-	messageClient(%client, '', "\c2Fingerprints:");
-	for(%i = 0; %i < %this.fingerprintCt; %i++)
-		messageClient(%client, '', "\c2" @ %i + 1 @ ".\c3" SPC %this.fingerprints[%i]);
+	if(%this.fingerprintCt) {
+		messageClient(%client, '', "\c2Fingerprints\c3:");
+		for(%i = 0; %i < %this.fingerprintCt; %i++)
+			messageClient(%client, '', "\c2" @ %i + 1 @ ".\c3" SPC %this.fingerprints[%i]);
+	} else {
+		messageClient(%client, '', "\c2No fingerprints found.");
+	}
 }
 
 //HOOKS
