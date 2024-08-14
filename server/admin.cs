@@ -84,9 +84,9 @@ function serverCmdGenerateRolesFromGamemode(%this, %gamemodeQuery, %numberOfPlay
 	// Force it's load.
 	MM_ModeReadyCustom();
 	// Ready to run roles function.
-	%role_list = MM_InitModeCustom(%minigame, true, %numberOfPlayers);
+	%roleList = MM_InitModeCustom(%minigame, true, %numberOfPlayers);
 
-	messageClient(%this, '', "\c4Roles generated:\c5" SPC %role_list);
+	messageClient(%this, '', "\c4Roles generated:\c5" SPC %roleList);
 
 	// Get back now.
 	%minigame.MM_SetGameMode(%currentMode);
