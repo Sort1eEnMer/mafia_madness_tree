@@ -42,6 +42,57 @@ function serverCmdClearInv(%this, %target)
 	messageClient(%this, '', "\c4Cleared \c3" @ %cl.getSimpleName() @ "\c4's inventory.");
 }
 
+function serverCmdGenerateRolesFromGamemode(%this, %gamemodeQuery, %numberOfPlayers) 
+{
+	%minigame = getMinigameFromObject(%this);
+
+	if(!%this.isSuperAdmin)
+		return;
+	if(!isObject(%minigame) || !%minigame.isMM || %minigame.running)
+		return;
+
+	if(!getMinigameFromObject(%this))
+		return messageClient(%this, '', "\c4You are not in a Mafia Madness minigame.");
+	if(%gamemodeQuery $= "")
+		return messageClient(%this, '', "\c4Please provide a gamemode name or ID as your first argument.");
+	if(%numberOfPlayers $= "")
+		return messageClient(%this, '', "\c4Please provide a number of players as your second argument.");
+
+	%gamemode = %gamemodeQuery;
+
+	if($MM::GameMode[%gamemodeQuery] $= "") {
+		%gamemodeIdByName = MM_FindGameModeByName(%gamemodeQuery, true);
+		if(%gamemodeIdByName == -1) 
+			return messageClient(%this, '', "\c4Could not find gamemode by string or ID.");
+		%gamemode = %gamemodeIdByName;
+	}
+
+	if(!$MM::GameModeIsCustom[%gamemode])
+		return messageClient(%this, '', "\c4This command is is meant for MM2 gamemodes.");
+
+	messageClient(%this, '', "\c4Found requested gamemode:\c5" SPC $MM::GameMode[%gamemode]);
+	messageAll('', "\c4ALL: Attempting to test role generation for a gamemode. It is not safe to start.");
+	if(!$MMDebug)
+		messageClient(%this, '', "\c4You do not have \c5$MMDebug\c4 as a truthy value. If you enable \c5$MMDebug\c4, you will get a very granular breakdown of why roles are generating.");
+
+	// This command requires modifying global variables.
+	// We want to keep this around to clean up back to our previous state.
+	%currentMode = $MM::CurrentMode;
+
+	// Set the mode.
+	%minigame.MM_SetGameMode(%gamemode);
+	// Force it's load.
+	MM_ModeReadyCustom();
+	// Ready to run roles function.
+	%role_list = MM_InitModeCustom(%minigame, true, %numberOfPlayers);
+
+	messageClient(%this, '', "\c4Roles generated:\c5" SPC %role_list);
+
+	// Get back now.
+	%minigame.MM_SetGameMode(%currentMode);
+	messageAll('', "\c4ALL: Test role generation over. It is now safe to start.");
+}
+
 function serverCmdIsolateChat(%this, %v0, %v1, %v2, %v3, %v4, %v5)
 {
 	if(!%this.isAdmin)

@@ -773,12 +773,12 @@ function MM_ModeReadyCustom(%this)
 	return true;
 }
 
-function MM_InitModeCustom(%this)
+function MM_InitModeCustom(%this, %commandMode, %manualNumberOfPlayers)
 {
 	MMDebug("MM_InitModeCustom" SPC %this);
 	MMDebug("   +Gamemode Name:" SPC $MM::GMName);
 
-	$MMGmembers = %this.MM_GetNumPlayers();
+	$MMGmembers = (%commandMode ? %manualNumberOfPlayers : %this.MM_GetNumPlayers());
 	// $MMGmembers = $debugVal;
 
 	MMDebug("   +Members:" SPC $MMGmembers);
@@ -1066,6 +1066,8 @@ function MM_InitModeCustom(%this)
 	%this.allRevive = $MM::GMAllRevive;
 	
 	deleteVariables("$MMG*");
+	if(%commandMode)
+		return %this.roles;
 }
 
 package MM_GameModes
