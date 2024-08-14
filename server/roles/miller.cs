@@ -11,7 +11,7 @@ if(!isObject(MMRole_Miller))
 	new ScriptObject(MMRole_Miller : MMRole_Innocent)
 	{
 		name = "Miller";
-		corpseName = "hoodie-wearing skittles-carrying african citizen"; //oo brakets u topical....
+		corpseName = "defamed layman";
 		displayName = "Innocent";
 
 		letter = "L";
